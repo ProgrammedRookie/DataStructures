@@ -1,4 +1,4 @@
-package com.zy;
+package com.zy.array;
 
 /**
  * 数组方式实现环形队列
