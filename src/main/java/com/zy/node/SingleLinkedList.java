@@ -12,19 +12,29 @@ public class SingleLinkedList {
         ln.insert(new HeroNode(1,"宋江","及时雨"));
         ln.insert(new HeroNode(3,"李逵","黑旋风"));
         ln.insert(new HeroNode(2,"吴用","智多星"));
-        ln.delete(1);
 
+        System.out.println( LinkedNode.getNodeLength(ln.getHead()));
 
         ln.list();
+
+        HeroNode lastNode = LinkedNode.getLastNode(ln.getHead(), 2);
+
+        System.out.println(lastNode);
+
     }
 }
 
 class LinkedNode{
 
+
     /**
      *  链表头节点
      */
     HeroNode head = new HeroNode(0,"","");
+
+    public HeroNode getHead() {
+        return head;
+    }
 
     /**
      * 添加
@@ -147,6 +157,56 @@ class LinkedNode{
         }
     }
 
+    /**
+     * 返回 链表中有效节点数
+     * @param head
+     * @return
+     */
+    public static int getNodeLength(HeroNode head){
+        // 当链表为空时
+        if (head.next == null){
+            return 0;
+        }
+        int length = 0;
+        // 排除头节点
+        HeroNode temp = head.next;
+        while (temp != null){
+            length++;
+            // 向后移动
+            temp = temp.next;
+        }
+        return length;
+    }
+
+    /**
+     * 返回 倒数第index位置上的节点
+     * @param heroNode
+     * @param index
+     * @return
+     */
+    public static HeroNode getLastNode(HeroNode heroNode,int index){
+
+        // 链表为空时，返回null
+        if (heroNode.next == null){
+            return null;
+        }
+        // 链表总长度
+        int size = getNodeLength(heroNode);
+
+        // 校验index
+        if (index < 0 || index > size){
+            return null;
+        }
+        // 排除头
+        HeroNode temp = heroNode.next;
+        // 变量 size -index 次数后，就是倒数index 上的 node
+        for (int i = 0; i < size - index ; i++) {
+            temp = temp.next;
+        }
+        return temp;
+    }
+
+
 
 }
 
@@ -158,6 +218,7 @@ class HeroNode{
     public String name;
     public String nickName;
     public HeroNode next;
+
 
 
     public HeroNode(int no,String name,String nickName){
