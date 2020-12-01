@@ -1,5 +1,8 @@
 package com.zy.node;
 
+
+import java.util.Stack;
+
 /**
  * 单链表
  * @author 子远
@@ -12,14 +15,16 @@ public class SingleLinkedList {
         ln.insert(new HeroNode(1,"宋江","及时雨"));
         ln.insert(new HeroNode(3,"李逵","黑旋风"));
         ln.insert(new HeroNode(2,"吴用","智多星"));
-
-        System.out.println( LinkedNode.getNodeLength(ln.getHead()));
-
         ln.list();
 
-        HeroNode lastNode = LinkedNode.getLastNode(ln.getHead(), 2);
+        System.out.println("============");
+      //  System.out.println( LinkedNode.getNodeLength(ln.getHead()));
+        LinkedNode.reversePrint(ln.getHead());
+        ln.list();
 
-        System.out.println(lastNode);
+      //  HeroNode lastNode = LinkedNode.getLastNode(ln.getHead(), 2);
+
+       // System.out.println(lastNode);
 
     }
 }
@@ -152,7 +157,7 @@ class LinkedNode{
             if (temp == null){
                 break;
             }
-            System.out.print(temp);
+            System.out.println(temp);
             temp = temp.next;
         }
     }
@@ -204,6 +209,62 @@ class LinkedNode{
             temp = temp.next;
         }
         return temp;
+    }
+
+
+    /**
+     * 链表反转
+     * @param head
+     */
+    public static void  reverseNode(HeroNode head){
+
+        // 校验链表
+        if (head.next == null){
+            System.out.println("链表空~~~~");
+            return;
+        }
+        // 临时变量
+        HeroNode cur  = head.next;
+        // 指向 cur 的下一个 next
+        HeroNode next = null;
+        // 创建一个临时的头
+        HeroNode reverseNode = new HeroNode(0,"","");
+        // 将每次拿到的节点都放到reverse 的头位置 （反转）
+        while (cur != null){
+            // 先获取 cur 的下一个 node
+            next = cur.next;
+            // 将 cur.next 放到临时链表的头位置上
+            // reverseNode.next 头节点的下一个位置，相当于 链表的右边和cur.next 相连
+            cur.next = reverseNode.next;
+            // reverseNode.next 的左边链接 cur 相当于放到头位置的下一个节点的位置上
+            reverseNode.next = cur;
+            cur = next;
+        }
+        head.next = reverseNode.next;
+    }
+
+    /**
+     * 从尾到头打印链表 (栈的方式 特点：先进后出)
+     * @param head
+     */
+    public static void reversePrint(HeroNode head){
+
+        if (head.next == null){
+            return;
+        }
+
+        HeroNode cur  = head.next;
+
+        Stack<HeroNode> stack = new Stack<HeroNode>();
+        // 压栈
+        while (cur != null){
+            stack.push(cur);
+            cur = cur.next;
+        }
+        // 弹出
+        while (stack.size() > 0){
+            System.out.println(stack.pop());
+        }
     }
 
 
