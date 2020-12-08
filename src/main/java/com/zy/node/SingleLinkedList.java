@@ -12,15 +12,18 @@ public class SingleLinkedList {
     public static void main(String[] args) {
         LinkedNode ln = new LinkedNode();
 
-        ln.insert(new HeroNode(1,"宋江","及时雨"));
-        ln.insert(new HeroNode(3,"李逵","黑旋风"));
-        ln.insert(new HeroNode(2,"吴用","智多星"));
-        ln.list();
+        ln.add(new HeroNode(1,"宋江","及时雨"));
+        ln.add(new HeroNode(3,"李逵","黑旋风"));
+        ln.add(new HeroNode(2,"吴用","智多星"));
+
+        LinkedNode ln2 = new LinkedNode();
+        ln2.add(new HeroNode(5,"宋江","及时雨"));
+        ln2.add(new HeroNode(4,"李逵","黑旋风"));
+        ln2.add(new HeroNode(6,"吴用","智多星"));
 
         System.out.println("============");
       //  System.out.println( LinkedNode.getNodeLength(ln.getHead()));
-        LinkedNode.reversePrint(ln.getHead());
-        ln.list();
+        LinkedNode.mergeTwoLists(ln.getHead(),ln2.getHead());
 
       //  HeroNode lastNode = LinkedNode.getLastNode(ln.getHead(), 2);
 
@@ -267,6 +270,32 @@ class LinkedNode{
         }
     }
 
+    /**
+     * 合并链表 还得在想想
+     * @param node1
+     * @param node2
+     * @return
+     */
+    public static HeroNode mergeTwoLists(HeroNode node1 ,HeroNode node2){
+
+
+        if (node1 == null){
+            return node2;
+        }
+        if (node2 == null){
+            return node1;
+        }
+
+        if (node1.no < node2.no){
+            node1.next = mergeTwoLists(node1.next,node2);
+            return node1;
+        }else {
+            node2.next = mergeTwoLists(node1,node2.next);
+            return node2;
+        }
+
+    }
+
 
 
 }
@@ -279,8 +308,6 @@ class HeroNode{
     public String name;
     public String nickName;
     public HeroNode next;
-
-
 
     public HeroNode(int no,String name,String nickName){
         this.no = no;
