@@ -105,6 +105,7 @@ class SingleCircleLinked {
             first = first.getNext();
             cur.setNext(first);
         }
+
         System.out.printf("剩下的节点 %d \n",cur.getNo());
     }
 
