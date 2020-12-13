@@ -8,8 +8,9 @@ public class SingleCircleLinkedList {
     public static void main(String[] args) {
         SingleCircleLinked sc = new SingleCircleLinked();
 
-        sc.add(5);
-        sc.list();
+        sc.add(15);
+        // sc.list();
+        sc.countNode(1,4,15);
 
     }
 }
@@ -63,6 +64,48 @@ class SingleCircleLinked {
             }
             cur = cur.getNext();
         }
+    }
+
+    /**
+     * 约瑟夫循环出圈问题
+     * @param startNo 开始出圈的节点
+     * @param countNumber 循环次数
+     * @param nums  环形队列的总长度
+     */
+    public void countNode(int startNo,int countNumber,int nums){
+
+        // 校验参数
+        if (first == null || startNo < 1 || startNo > nums){
+            return;
+        }
+        Node cur = first;
+        // 将cur 指向 环形队列的最后一个节点
+        while (true){
+            if (cur.getNext() == first){
+                break;
+            }
+            cur =  cur.getNext();
+        }
+        // 将 first 和 cur 都移动 startNo - 1 次
+        for (int i = 0; i < startNo -1 ; i++) {
+            first = first.getNext();
+            cur = cur.getNext();
+        }
+        while (true){
+            // cur 和first  相等 说明圈子中只剩下一个节点
+            if (cur == first){
+                break;
+            }
+            for (int i = 0; i < countNumber -1 ; i++) {
+                first = first.getNext();
+                cur = cur.getNext();
+            }
+            System.out.printf(" node 节点 编号 %d \n",first.getNo());
+            // 重新组织环形队列
+            first = first.getNext();
+            cur.setNext(first);
+        }
+        System.out.printf("剩下的节点 %d \n",cur.getNo());
     }
 
 
