@@ -16,6 +16,8 @@ public class ArrayOrNodeStack {
         int ch = ' ';
         int oper = 0;
 
+        String keepNums ="";
+
         String es = "30+9*2-2";
 
         ArrayStack numsStack = new ArrayStack(10);
@@ -43,7 +45,18 @@ public class ArrayOrNodeStack {
                 }
             }else {
                 // todo 将数放入数字栈
-                numsStack.push(ch -48);
+               //  numsStack.push(ch -48);
+                ch = ch -48;
+                keepNums += ch;
+
+                if (index == es.length() -1){
+                    numsStack.push(Integer.parseInt(keepNums));
+                }else {
+                    if (operStack.isOper(es.substring(index +1,index+2).charAt(0))){
+                        numsStack.push(Integer.parseInt(keepNums));
+                        keepNums = "";
+                    }
+                }
             }
             index++;
             if (index == es.length()){
