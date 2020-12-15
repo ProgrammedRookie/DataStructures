@@ -1,17 +1,22 @@
 package com.zy.stack;
 
+import javax.management.relation.RoleUnresolved;
+
 /**
  * @author 子远
  */
 public class ArrayOrNodeStack {
 
     public static void main(String[] args) {
-        ArrayStack stack = new ArrayStack(4);
-        stack.push(1);
-        stack.push(2);
-        stack.push(3);
-        System.out.println("弹出"+ stack.pop());
-        stack.list();
+        NodeStack ns = new NodeStack();
+        ns.push( 1);
+        ns.push( 2);
+        ns.push(3);
+        ns.push( 4);
+
+        ns.list();
+
+        System.out.println(ns.pop());
     }
 }
 
@@ -20,6 +25,66 @@ public class ArrayOrNodeStack {
  */
 class NodeStack{
     // todo
+
+
+    Node head;
+
+
+    public boolean isEmpty(){
+        return head.next == null;
+    }
+
+    public void  push(int value){
+        Node node = new Node(value);
+        if(head == null) {
+            head = node;
+        }else {
+            // 直接将新节点作为栈顶元素
+            node.next = head;
+            head = node;
+        }
+
+    }
+
+    public void list(){
+
+        if (isEmpty()){
+            throw  new RuntimeException("栈空");
+        }
+
+        Node cur = head;
+        while (true){
+            if (cur == null){
+                break;
+            }
+            System.out.printf("编号 %d \n",cur.no);
+            cur = cur.next;
+        }
+
+    }
+
+    public int pop(){
+
+        if (isEmpty()){
+           throw new RuntimeException("栈空");
+        }
+
+        int value = head.no;
+        head = head.next;
+        return value;
+    }
+
+}
+
+
+class Node {
+
+    public int no;
+    public Node next;
+
+    public Node(int no) {
+        this.no = no;
+    }
 }
 
 /**
